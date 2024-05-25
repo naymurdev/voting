@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./dist/styles/output.css" rel="stylesheet" />
+    <title>Login | E-DEM</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+    </style>
+    <script defer>
+      const cookiesString = document.cookie;
+      // Parse cookies string into an object
+      const cookies = cookiesString
+        .split(";")
+        .reduce((cookiesObject, cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          cookiesObject[name] = value;
+          return cookiesObject;
+        }, {});
+      const token = cookies["token"];
+      if (token) {
+        // Token cookie exists, user is logged in, allow browsing
+        console.log("Token cookie exists. Allowing browsing...");
+        window.location.href = "/";
+      } else {
+        // Token cookie doesn't exist, redirect to login page
+        console.log("Token cookie doesn't exist. Redirecting to login page...");
+        // Replace with the actual login page URL
+      }
+    </script>
+  </head>
+  <body>
+    <main class="grid place-items-center h-[100svh] px-4 relative">
+      <img
+        class="absolute -z-50 top-0 bottom-0 h-full w-full object-cover"
+        src="./assets/vote2.jpg"
+        role="presentation" />
+
+      <div class="border bg-white rounded-xl p-6 sm:p-10 w-full max-w-xl">
+        <h1 class="font-medium text-3xl sm:text-4xl text-center mt-2">E-DEM</h1>
+
+        <form class="mt-8" id="loginForm">
+          <div class="space-y-1">
+            <label for="email" class="font-medium">Email/userID</label>
+            <input
+              type="text"
+              name="user"
+              id="user"
+              placeholder="Enter your email/userID"
+              class="border px-3 py-2 rounded block min-w-0 w-full" />
+          </div>
+          <div class="space-y-1 my-3">
+            <label for="password" class="font-medium">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter your password"
+              class="border px-3 py-2 rounded block min-w-0 w-full" />
+          </div>
+          <button
+            type="submit"
+            class="block bg-gray-950 rounded text-white w-full py-2 mt-5">
+            Sign in
+          </button>
+        </form>
+        <p class="mt-2 text-center">
+          Don't have an account yet?
+          <a href="./register.html" class="font-semibold">Sign Up</a>
+        </p>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const userIdendity = document.getElementById("user").value;
+          const password = document.getElementById("password").value;
+          const formData = {
+            userIdendity,
+            password,
+          };
+
+          if (!userIdendity || !password) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Please fill all the input!",
+            });
+            return false;
+          }
+
+          // Show loading indicator
+          const submitButton = document.querySelector(
+            'form button[type="submit"]'
+          );
+          submitButton.disabled = true;
+          submitButton.innerHTML = "Loading...";
+          axios
+            .post(
+              "https://voting-system-server.vercel.app/api/auth/login",
+              formData
+            )
+            .then(function (response) {
+              // handle success
+              console.log(response);
+              submitButton.disabled = false;
+              submitButton.innerHTML = "submit";
+
+              document.cookie = "Bearer=" + response?.data?.data?.token;
+              if (response?.data?.data?.user?.voted.vote) {
+                document.cookie = "Voted=" + true;
+              }
+              // if (response?.data?.data) {
+              //   Swal.fire({
+              //     icon: "success",
+              //     title: "Your Login successfully",
+              //     showConfirmButton: false,
+              //     timer: 1500,
+              //   });
+              // }
+              document.location.href = "/";
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `${error?.response?.data?.message}`,
+              });
+              submitButton.disabled = false;
+              submitButton.innerHTML = "submit";
+            })
+            .finally(function () {
+              // always executed
+            });
+        });
+    </script>
+  </body>
+</html>

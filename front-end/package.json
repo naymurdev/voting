@@ -1,0 +1,13 @@
+{
+  "name": "voting-system",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./styles/globals.css -o ./dist/styles/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  },
+  "keywords": [],
+  "license": "MIT"
+}

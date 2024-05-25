@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./dist/styles/output.css" rel="stylesheet" />
+    <title>Bulgaria | Voting System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+    <script src="./js/loading-screen.js" defer></script>
+  </head>
+  <body>
+    <header class="bg-black text-white max-[400px]:text-xs">
+      <div class="container py-2">
+        <div class="w-[54%] ml-auto flex items-center justify-between gap-3">
+          <a href="./index.html" class="font-medium sm:text-3xl">E-DEM</a>
+          <div id="user-info" class="flex items-center gap-2"></div>
+        </div>
+      </div>
+
+      <nav class="bg-blue-500 text-white">
+        <div
+          class="flex justify-start items-center gap-x-4 md:gap-x-6 gap-y-2 underline container flex-wrap">
+          <a href="./albania.html" class="flex items-center gap-x-2">
+            <img src="./assets/albania.png" alt="Albania flag" />
+            Albania
+          </a>
+          <a
+            href="./bosnia-and-hergezovina.html"
+            class="flex items-center gap-x-2">
+            <img src="./assets/bosnia.png" alt="Albania flag" />
+            Bosnia and Herzegovina
+          </a>
+          <a
+            href="./bulgaria.html"
+            class="flex items-center gap-x-2 bg-white py-1 sm:py-3 text-black px-3">
+            <img src="./assets/bulgaria.png" alt="Albania flag" />
+            Bulgaria
+          </a>
+          <a href="./croatia.html" class="flex items-center gap-x-2">
+            <img src="./assets/croatia.png" alt="Albania flag" />
+            Croatia
+          </a>
+          <a href="./kosovo.html" class="flex items-center gap-x-2">
+            <img src="./assets/kosovo.png" alt="Albania flag" />
+            Kosovo
+          </a>
+          <a href="./montenegro.html" class="flex items-center gap-x-2">
+            <img src="./assets/montenegro.png" alt="Albania flag" />
+            Montenegro
+          </a>
+          <a href="./north-macedonia.html" class="flex items-center gap-x-2">
+            <img src="./assets/north-macedonia.png" alt="Albania flag" />
+            North Macedonia
+          </a>
+        </div>
+      </nav>
+    </header>
+    <div id="loading-screen">
+      <img
+        src="./assets/voteloading.png"
+        alt="Loading..."
+        class="loading-image" />
+    </div>
+    <main class="container my-8 md:my-12">
+      <div class="heropage" id="voting-container">
+        <div class="grid grid-cols-12 gap-5">
+          <div class="col-span-5">
+            <div class="rounded-md w-full border-2 border-[#000]">
+              <img
+                src="/assets/cbulgaria.png"
+                alt=""
+                class="w-full h-full rounded-md" />
+            </div>
+            <p class="text-sm py-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed velit
+              accusantium totam officiis maiores repudiandae ab suscipit,
+              inventore laudantium architecto et consequatur hic laboriosam
+              molestiae laborum similique amet esse id? Fugiat velit iste ab
+              quibusdam autem nihil exercitationem pariatur reiciendis, maxime
+              praesentium obcaecati, vel quae commodi ad, odio repellendus
+              architecto accusantium illum saepe dolorem sequi labore magni
+              expedita. Aliquid facilis hic eaque ipsa totam consectetur a et
+              exercitationem est quidem. Eos pariatur.
+            </p>
+          </div>
+          <div class="col-span-7">
+            <div class="candidateSec"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="bg-black py-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="./index.html" class="font-medium sm:text-3xl">E-DEM</a>
+          <div>
+            <div>
+              <p class="font-semibold">Short Link:</p>
+              <div class="flex gap-3">
+                <ul>
+                  <li>
+                    <a href="./albania.html" class="underline">Albania</a>
+                  </li>
+                  <li>
+                    <a href="./bosnia-and-hergezovina.html" class="underline"
+                      >Bosnia</a
+                    >
+                  </li>
+                  <li>
+                    <a href="./bulgaria.html" class="underline">Bulgaria</a>
+                  </li>
+                  <li>
+                    <a href="./croatia.html" class="underline">Croatia</a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <a href="./kosovo.html" class="underline">Kosovo</a>
+                  </li>
+                  <li>
+                    <a href="./montenegro.html" class="underline">Montenegro</a>
+                  </li>
+                  <li>
+                    <a href="./north-macedonia.html" class="underline"
+                      >North Macedonia</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://wa.me/+8801867871903" class="underline"
+                      >Contact us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white text-black text-center">©copyright 2018 E-DEM</div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/profile-check.js" type="module"></script>
+    <script src="./js/main.js" type="module"></script>
+    <script src="./js/voted.js" type="module"></script>
+  </body>
+</html>

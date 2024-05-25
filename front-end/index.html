@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-DEM | Voting System</title>
+    <link href="./dist/styles/output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+
+    <script src="./js/loading-screen.js" defer></script>
+  </head>
+  <body>
+    <header class="bg-black text-white max-[400px]:text-xs">
+      <div class="container py-2">
+        <div class="w-[54%] ml-auto flex items-center justify-between gap-3">
+          <a href="./index.html" class="font-medium sm:text-3xl">E-DEM</a>
+          <div id="user-info" class="flex items-center gap-2"></div>
+        </div>
+      </div>
+
+      <nav class="py-4 sm:py-4 bg-blue-500 text-white overflow-x-auto">
+        <div
+          class="flex justify-start items-center gap-x-4 md:gap-x-6 gap-y-2 underline container flex-shrink">
+          <a
+            href="./albania.html"
+            class="flex items-center gap-x-2 flex-nowrap">
+            <img src="./assets/albania.png" alt="Albania flag" />
+            Albania
+          </a>
+          <a
+            href="./bosnia-and-hergezovina.html"
+            class="flex items-center gap-x-2 flex-nowrap">
+            <img src="./assets/bosnia.png" alt="Albania flag" />
+            Bosnia and Herzegovina
+          </a>
+          <a
+            href="./bulgaria.html"
+            class="flex items-center gap-x-2 flex-nowrap">
+            <img src="./assets/bulgaria.png" alt="Albania flag" />
+            Bulgaria
+          </a>
+          <a
+            href="./croatia.html"
+            class="flex items-center gap-x-2 flex-nowrap">
+            <img src="./assets/croatia.png" alt="Albania flag" />
+            Croatia
+          </a>
+          <a href="./kosovo.html" class="flex items-center gap-x-2 flex-shrink">
+            <img src="./assets/kosovo.png" alt="Albania flag" />
+            Kosovo
+          </a>
+          <a
+            href="./montenegro.html"
+            class="flex items-center gap-x-2 flex-nowrap">
+            <img src="./assets/montenegro.png" alt="Albania flag" />
+            Montenegro
+          </a>
+          <a
+            href="./north-macedonia.html"
+            class="flex items-center gap-x-2 flex-nowrap">
+            <img src="./assets/north-macedonia.png" alt="Albania flag" />
+            North Macedonia
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <div id="loading-screen">
+      <img
+        src="./assets/voteloading.png"
+        alt="Loading..."
+        class="loading-image" />
+    </div>
+    <main class="container my-8 md:my-12">
+      <div
+        class="mx-2 bg-blue-500 rounded-2xl border p-4 md:p-8 grid md:grid-cols-2 gap-8 lg:min-h-[72svh]">
+        <section class="bg-white p-4 md:p-8 rounded-2xl">
+          <img src="./assets/map.png" alt="" class="w-full" />
+          <h2 class="text-xl font-medium border-b pb-2">
+            Welcome to E-DEM, your modern voting solution for the Balkans. We
+            offer a user-friendly platform that makes voting easier and more
+            accessible than ever before. With our innovative technology,
+            participate today to shape the future of your community with
+            confidence and ease. Join us and be a part of the democratic
+            revolution!
+          </h2>
+        </section>
+
+        <section
+          class="bg-white border p-4 md:p-8 rounded-2xl max-w-3xl w-full">
+          <h2 class="text-2xl mt-1 font-semibold mb-5 text-center">
+            Upcoming Elections
+          </h2>
+
+          <div
+            id="upcoming_elections"
+            class="grid min-[300px]:grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] justify-center gap-6 mb-4">
+            <div class="bg-[#FAFBFC] rounded-lg border p-4 text-center">
+              <h3 class="mb-1 font-medium">
+                <a href="">Albania</a>
+              </h3>
+              <time class="font-semibold min-[400px]:text-lg"
+                >2nd May 2024</time
+              >
+              <a
+                href=""
+                class="flex max-w-fit mx-auto gap-x-2 mt-3 rounded-md font-medium bg-green-400 text-white px-4 py-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m9 12 2 2 4-4" />
+                  <path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z" />
+                  <path d="M22 19H2" />
+                </svg>
+
+                Vote
+              </a>
+            </div>
+            <div class="bg-[#FAFBFC] rounded-lg border p-4 text-center">
+              <h3 class="mb-1 font-medium">
+                <a href="">Albania</a>
+              </h3>
+              <time class="font-semibold min-[400px]:text-lg"
+                >2nd May 2024</time
+              >
+              <a
+                href=""
+                class="flex max-w-fit mx-auto gap-x-2 mt-3 rounded-md font-medium bg-green-400 text-white px-4 py-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m9 12 2 2 4-4" />
+                  <path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z" />
+                  <path d="M22 19H2" />
+                </svg>
+
+                Vote
+              </a>
+            </div>
+            <div class="bg-[#FAFBFC] rounded-lg border p-4 text-center">
+              <h3 class="mb-1 font-medium">
+                <a href="">Albania</a>
+              </h3>
+              <time class="font-semibold min-[400px]:text-lg"
+                >2nd May 2024</time
+              >
+              <a
+                href=""
+                class="flex max-w-fit mx-auto gap-x-2 mt-3 rounded-md font-medium bg-green-400 text-white px-4 py-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m9 12 2 2 4-4" />
+                  <path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z" />
+                  <path d="M22 19H2" />
+                </svg>
+
+                Vote
+              </a>
+            </div>
+            <div class="bg-[#FAFBFC] rounded-lg border p-4 text-center">
+              <h3 class="mb-1 font-medium">
+                <a href="">Albania</a>
+              </h3>
+              <time class="font-semibold min-[400px]:text-lg"
+                >2nd May 2024</time
+              >
+              <a
+                href=""
+                class="flex max-w-fit mx-auto gap-x-2 mt-3 rounded-md font-medium bg-green-400 text-white px-4 py-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true">
+                  <path d="m9 12 2 2 4-4" />
+                  <path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z" />
+                  <path d="M22 19H2" />
+                </svg>
+                Vote
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="bg-black py-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="./index.html" class="font-medium sm:text-3xl">E-DEM</a>
+          <div>
+            <div>
+              <p class="font-semibold">Short Link:</p>
+              <div class="flex gap-3">
+                <ul>
+                  <li>
+                    <a href="./albania.html" class="underline">Albania</a>
+                  </li>
+                  <li>
+                    <a href="./bosnia-and-hergezovina.html" class="underline"
+                      >Bosnia</a
+                    >
+                  </li>
+                  <li>
+                    <a href="./bulgaria.html" class="underline">Bulgaria</a>
+                  </li>
+                  <li>
+                    <a href="./croatia.html" class="underline">Croatia</a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <a href="./kosovo.html" class="underline">Kosovo</a>
+                  </li>
+                  <li>
+                    <a href="./montenegro.html" class="underline">Montenegro</a>
+                  </li>
+                  <li>
+                    <a href="./north-macedonia.html" class="underline"
+                      >North Macedonia</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://wa.me/+8801867871903" class="underline"
+                      >Contact us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white text-black text-center">©copyright 2018 E-DEM</div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/profile-check.js" type="module"></script>
+    <script type="module" async>
+      import { getUpcomingVote } from "./utils/getUpcomingVote.js";
+      let votingCardsHTML = "";
+
+      const upcomingElections = document.getElementById("upcoming_elections");
+      const upcomingVote = await getUpcomingVote();
+
+      // console.log(response);
+      upcomingVote?.forEach((data) => {
+        const votingCard = `
+            <div class="bg-[#FAFBFC] rounded-lg border p-4 text-center capitalize">
+                <h3 class="mb-1 font-medium">
+                  <a href="">${data?.country}</a>
+                </h3>
+                <time class="font-medium min-[400px]:text-lg "
+                  >${data?.votingStart}</time
+                >
+                <a
+                  href="/${data?.country}.html"
+                  class="flex max-w-fit mx-auto gap-x-2 mt-3 rounded-md font-medium bg-green-400 text-white px-4 py-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="m9 12 2 2 4-4" />
+                    <path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z" />
+                    <path d="M22 19H2" />
+                  </svg>
+
+                  Vote
+                </a>
+              </div>
+            
+            `;
+        votingCardsHTML += votingCard;
+      });
+      upcomingElections.innerHTML = votingCardsHTML;
+    </script>
+  </body>
+</html>

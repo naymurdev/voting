@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./dist/styles/output.css" rel="stylesheet" />
+    <title>Register | E-DEM</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+    </style>
+    <script defer>
+      const cookiesString = document.cookie;
+      // Parse cookies string into an object
+      const cookies = cookiesString
+        .split(";")
+        .reduce((cookiesObject, cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          cookiesObject[name] = value;
+          return cookiesObject;
+        }, {});
+      const token = cookies["token"];
+      if (token) {
+        // Token cookie exists, user is logged in, allow browsing
+        console.log("Token cookie exists. Allowing browsing...");
+        window.location.href = "/";
+      } else {
+        // Token cookie doesn't exist, redirect to login page
+        console.log("Token cookie doesn't exist. Redirecting to login page...");
+        // Replace with the actual login page URL
+      }
+    </script>
+  </head>
+  <body>
+    <main class="grid place-items-center min-h-[100svh] px-4 relative">
+      <img
+        class="absolute -z-50 top-0 bottom-0 h-full w-full object-cover"
+        src="./assets/vote.jpg"
+        role="presentation" />
+
+      <div class="border bg-white rounded-xl my-10 p-6 sm:p-10 w-full max-w-xl">
+        <h1 class="font-medium text-3xl sm:text-4xl text-center mt-2">E-DEM</h1>
+        <form id="registrationForm" class="mt-8">
+          <div class="space-y-1 mb-3">
+            <label for="name" class="font-medium">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              class="border px-3 py-2 rounded block min-w-0 w-full"
+              required />
+          </div>
+
+          <div class="space-y-1 mb-3">
+            <label for="country" class="font-medium">Select Country</label>
+            <select
+              name="country"
+              id="country"
+              class="block w-full py-2 border px-3 rounded">
+              <option value="albania">Albania</option>
+              <option value="bosnia-and-hergezovina">
+                Bosnia and Herzegovina
+              </option>
+              <option value="bulgaria">Bulgaria</option>
+              <option value="croatia">Croatia</option>
+              <option value="kosovo">Kosovo</option>
+              <option value="montenegro">Montenegro</option>
+              <option value="north-macedonia">North Macedonia</option>
+              <option value="serbia">Serbia</option>
+            </select>
+          </div>
+
+          <div class="space-y-1 mb-1">
+            <label for="age" class="font-medium">Age</label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              placeholder="18"
+              class="border px-3 py-2 rounded block min-w-0 w-full"
+              required />
+          </div>
+
+          <div class="space-y-1">
+            <label for="email" class="font-medium">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              class="border px-3 py-2 rounded block min-w-0 w-full"
+              required />
+          </div>
+
+          <div class="space-y-1 my-3">
+            <label for="password" class="font-medium">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              class="border px-3 py-2 rounded block min-w-0 w-full"
+              required />
+          </div>
+
+          <div class="space-y-1 my-3">
+            <label for="confirm-password" class="font-medium"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Repeat your password"
+              class="border px-3 py-2 rounded block min-w-0 w-full"
+              required />
+          </div>
+
+          <button
+            type="submit"
+            class="block bg-gray-950 rounded text-white w-full py-2 mt-5">
+            Sign up
+          </button>
+        </form>
+
+        <p class="mt-2 text-center">
+          Have an account?
+          <a href="./login.html" class="font-semibold">Sign in</a>
+        </p>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting normally
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const age = Number(document.getElementById("age").value);
+          const country = document.getElementById("country").value;
+          const password = document.getElementById("password").value;
+          const formData = {
+            name,
+            email,
+            age,
+            country,
+            password,
+          };
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          if (
+            !name ||
+            !email ||
+            !country ||
+            !age ||
+            !password ||
+            !confirmPassword
+          ) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Please fill all the input!",
+            });
+            return false;
+          }
+          if (password !== confirmPassword) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Password didn't match!",
+            });
+            return false;
+          }
+
+          // Show loading indicator
+          const submitButton = document.querySelector(
+            'form button[type="submit"]'
+          );
+          submitButton.disabled = true;
+          submitButton.innerHTML = "Loading...";
+          axios
+            .post(
+              "https://voting-system-server.vercel.app/api/auth/register",
+              formData
+            )
+            .then(function (response) {
+              // handle success
+              console.log(response);
+              submitButton.disabled = false;
+              submitButton.innerHTML = "submit";
+              Swal.fire({
+                title: `<strong>${response?.data?.data?.userId}</strong>`,
+                icon: "info",
+                html: `
+    copy your userID to login or you can login with your email also
+  `,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText: `
+     ok!
+  `,
+                cancelButtonAriaLabel: "Thumbs down",
+              });
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+              error?.response?.data?.error?.sources.forEach((err) => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: `${err?.message}`,
+                });
+              });
+              submitButton.disabled = false;
+              submitButton.innerHTML = "submit";
+            })
+            .finally(function () {
+              // always executed
+            });
+        });
+    </script>
+  </body>
+</html>

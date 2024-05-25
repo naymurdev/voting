@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  font-family: "Poppins", sans-serif;
+  --shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
+  --color: #077ce9;
+  --gap: 0.5rem;
+  --radius: 5px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#loading-screen {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: #007bff;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: grid;
+  place-content: center;
+}
+
+.loading-image {
+  width: 100px; /* Adjust the width and height of the loading image */
+  height: auto;
+  animation: loadingImage 0.7s linear infinite;
+}
+
+@keyframes loadingImage {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.btn {
+  background-color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  -moz-column-gap: var(--gap);
+       column-gap: var(--gap);
+  padding: 0.6rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  border: none;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.bx {
+  font-size: 1.1rem;
+}
+
+.user-dropdown .dropdown {
+  position: absolute;
+  width: 100vw;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  margin-top: 0.3rem;
+  background: white;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: all 0.1s cubic-bezier(0.16, 1, 0.5, 1);
+}
+.user-dropdown .dropdown a,
+.user-dropdown .dropdown button {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: var(--gap);
+       column-gap: var(--gap);
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+  color: black;
+}
+.user-dropdown .dropdown a:hover,
+.user-dropdown .dropdown button:hover {
+  background-color: var(--color);
+  color: white;
+}
+.user-dropdown .show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0rem);
+}
+.user-dropdown .arrow {
+  transform: rotate(180deg);
+  transition: 0.2s ease;
+}/*# sourceMappingURL=globals.css.map */
