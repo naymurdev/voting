@@ -7,3 +7,8 @@ export type Vote = {
   partyName:string
 };
 
+
+export type VotePayload = z.infer<typeof voteSchema>;
+export type VotingPayload = {
+  partyName: string;
+};

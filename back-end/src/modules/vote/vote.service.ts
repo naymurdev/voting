@@ -1,15 +1,9 @@
 import { TJwtPayload } from "../user/user.interface";
-import { VotePayload, VotingPayload } from "./vote.interface";
 import { VotingModel } from "./vote.model";
 import { UserModel } from "../user/user.model";
-import { candidateInfosModel } from "../../modules/candidate/candidates.model";
 
-export async function vote(user_email: any, candidate: VotingPayload) {
-  const checkingCandidate = await candidateInfosModel.findOne({
-    "candidate.name": candidate?.candidateName,
-    "candidate.partyName": candidate?.partyName,
-  });
-  if (!checkingCandidate) throw new Error("Invalid Candidate");
+export async function vote(user_email: any, candidate: any) {
+
   const user = await UserModel.findOne({ email: user_email });
   console.log(user);
 

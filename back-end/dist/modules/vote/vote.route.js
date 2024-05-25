@@ -6,5 +6,4 @@ const express_1 = require("express");
 const vote_controller_1 = require("./vote.controller");
 const router = (0, express_1.Router)();
 router.post("/give", auth_1.verifyToken, vote_controller_1.giveVote);
-router.get("/upcoming-vote", vote_controller_1.upcomingVoteController);
 exports.VotingRoutes = router;
