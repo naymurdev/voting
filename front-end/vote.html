@@ -80,104 +80,62 @@
           <div class="w-[200px]"></div>
         </div>
 
-        <div class="grid gap-6">
-          <div
-            class="flex gap-8 items-center overflow-hidden rounded border border-red-500 border-8 p-4"
-          >
-            <div class="flex gap-6">
-              <div class="w-[260px] overflow-hidden">
-                <img
-                  src="./assets/v2/party.jpeg"
-                  alt="party-image"
-                  class="w-full object-center object-cover"
-                />
-              </div>
-
-              <div>
-                <h3 class="text-xl font-semibold">bold text</h3>
-
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                  vero animi ea id possimus iste ipsum officia neque nihil
-                  quisquam.
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <a
-                href="./vote.html"
-                class="bg-green-500 text-white px-6 py-2 rounded shadow hover:bg-green-700"
-                >vote</a
-              >
-            </div>
-          </div>
-
-          <div
-            class="flex gap-8 items-center overflow-hidden rounded border border-red-500 border-8 p-4"
-          >
-            <div class="flex gap-6">
-              <div class="w-[260px] overflow-hidden">
-                <img
-                  src="./assets/v2/party.jpeg"
-                  alt="party-image"
-                  class="w-full object-center object-cover"
-                />
-              </div>
-
-              <div>
-                <h3 class="text-xl font-semibold">bold text</h3>
-
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                  vero animi ea id possimus iste ipsum officia neque nihil
-                  quisquam.
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <a
-                href="./vote.html"
-                class="bg-green-500 text-white px-6 py-2 rounded shadow hover:bg-green-700"
-                >vote</a
-              >
-            </div>
-          </div>
-
-          <div
-            class="flex gap-8 items-center overflow-hidden rounded border border-red-500 border-8 p-4"
-          >
-            <div class="flex gap-6">
-              <div class="w-[260px] overflow-hidden">
-                <img
-                  src="./assets/v2/party.jpeg"
-                  alt="party-image"
-                  class="w-full object-center object-cover"
-                />
-              </div>
-
-              <div>
-                <h3 class="text-xl font-semibold">bold text</h3>
-
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                  vero animi ea id possimus iste ipsum officia neque nihil
-                  quisquam.
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <a
-                href="./vote.html"
-                class="bg-green-500 text-white px-6 py-2 rounded shadow hover:bg-green-700"
-                >vote</a
-              >
-            </div>
-          </div>
+        <div class="grid gap-6 candi-card-container">
+          <!-- cards -->
         </div>
       </div>
     </main>
+
+    <script>
+      // Fetch candidates data
+      fetch("http://localhost:8081/api/candidate/get")
+        .then((response) => response.json())
+        .then((candidates) => {
+          const candidatesList = document.querySelector(
+            ".candi-card-container"
+          );
+
+          candidates.forEach((candidate) => {
+            const cardTemp = () => {
+              return `
+              <div
+                class="flex gap-8 items-center overflow-hidden rounded border border-red-500 border-8 p-4 justify-between"
+              >
+                <div class="flex gap-6">
+                  <div class="w-[260px] overflow-hidden">
+                    <img
+                      src="${candidate.candidateImgUrl}"
+                      alt="party-image"
+                      class="w-full object-center object-cover"
+                    />
+                  </div>
+
+                  <div>
+                    <h3 class="text-xl font-semibold">${candidate.candidateName}</h3>
+
+                    <p>
+                      ${candidate.candidateContact}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <a
+                    href="./vote.html"
+                    class="bg-green-500 text-white px-6 py-2 rounded shadow hover:bg-green-700"
+                    >vote</a
+                  >
+                </div>
+              </div>
+              `;
+            };
+
+            candidatesList.innerHTML += cardTemp();
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to fetch candidates: " + error.message);
+        });
+    </script>
   </body>
 </html>

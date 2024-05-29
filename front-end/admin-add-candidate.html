@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Candidate Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 h-[100vh]">
+    <div class="flex h-full">
+      <!-- Sidebar -->
+      <div class="w-64 bg-gray-300 p-6 h-full">
+        <div class="text-2xl font-bold mb-6">LOGO</div>
+        <ul class="space-y-4">
+          <li>
+            <a
+              href="./admin-add-candidate.html"
+              class="block bg-black text-white text-center py-2 rounded"
+              >Candidate</a
+            >
+          </li>
+          <li>
+            <a
+              href="./admin-get-vote-details.html"
+              class="block bg-gray-100 text-black text-center py-2 rounded"
+              >user-voting</a
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- Main Content -->
+      <div class="flex-1 p-6">
+        <div
+          class="show-form-btn flex justify-center items-center w-24 h-24 border-2 border-dashed border-black mb-6 cursor-pointer"
+        >
+          <span class="text-3xl">+</span>
+        </div>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 candi-card-container"
+        >
+          <!-- Candidate Card -->
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="hidden backdrop-blur-sm fixed top-0 left-0 w-full h-[100vh] grid place-content-center candidate-form-container"
+    >
+      <div
+        class="max-w-md mx-auto bg-white rounded p-6 shadow-md add-form-container"
+      >
+        <h2 class="text-2xl font-bold mb-4">Candidate Submission Form</h2>
+        <form action="/submit-candidate" method="post">
+          <div class="mb-4">
+            <label
+              for="candidateName"
+              class="block text-gray-700 font-bold mb-2"
+              >Candidate Name:</label
+            >
+            <input
+              type="text"
+              id="candidateName"
+              name="candidateName"
+              class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="candidateImgUrl"
+              class="block text-gray-700 font-bold mb-2"
+              >Candidate Image URL:</label
+            >
+            <input
+              type="url"
+              id="candidateImgUrl"
+              name="candidateImgUrl"
+              class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="candidateContact"
+              class="block text-gray-700 font-bold mb-2"
+              >Candidate Contact Info:</label
+            >
+            <textarea
+              id="candidateContact"
+              name="candidateContact"
+              rows="4"
+              class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
+              required
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="capitalize bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            add
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(`.show-form-btn`).addEventListener("click", () => {
+        document
+          .querySelector(".candidate-form-container")
+          .classList.remove("hidden");
+      });
+
+      document
+        .querySelector(".candidate-form-container")
+        .addEventListener("click", () => {
+          document
+            .querySelector(".candidate-form-container")
+            .classList.add("hidden");
+        });
+
+      document
+        .querySelector(".add-form-container")
+        .addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+
+      //---------------------
+
+      document
+        .querySelector(".add-form-container form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting normally
+
+          // Get form data
+          const formData = {
+            candidateName: event.target.candidateName.value,
+            candidateImgUrl: event.target.candidateImgUrl.value,
+            candidateContact: event.target.candidateContact.value,
+          };
+
+          // Send POST request
+          fetch("http://localhost:8081/api/candidate/add", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              alert("Candidate created successfully");
+
+              window.location.reload();
+            })
+            .catch((error) => {
+              alert("Failed to create candidate: " + error.message);
+            });
+        });
+
+      // Fetch candidates data
+      fetch("http://localhost:8081/api/candidate/get")
+        .then((response) => response.json())
+        .then((candidates) => {
+          const candidatesList = document.querySelector(
+            ".candi-card-container"
+          );
+
+          candidates.forEach((candidate) => {
+            const cardTemp = () => {
+              return `
+              <div class="bg-white p-4 rounded shadow candi-card">
+                <div class="bg-gray-200 h-32 mb-4 overflow-hidden">
+                  <img class="w-full object-center" src="${candidate.candidateImgUrl}" alt="image"/>
+                </div>
+                <div class="text-lg font-bold mb-2">${candidate.candidateName}</div>
+                <div class="space-y-1 mb-4">
+                  ${candidate.candidateContact}
+                </div>
+                <div class="flex justify-between">
+                  <button class="bg-black text-white py-1 px-4 rounded">
+                    Edit info
+                  </button>
+                  <button onclick="console.log('${candidate._id}')" data-del-btn="${candidate._id}" class="bg-red-500 text-white py-1 px-4 rounded">
+                    delete
+                  </button>
+                </div>
+
+                <div
+                  class="del-sure-box hidden fixed top-0 left-0 grid place-content-center backdrop-blur-sm w-full h-[100vh]"
+                >
+                  <div class="del-confirm max-w-md mx-auto bg-white rounded p-6 shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 capitalize">are you sure?</h2>
+
+                    <div class="flex gap-4">
+                      <button data-del-cancel class="rounded shadow px-4 py-2 capitalize">cancel</button>
+                      <button
+                        data-del-id="${candidate._id}"
+                        class="rounded shadow px-4 py-2 bg-red-500 text-white capitalize"
+                      >
+                        sure
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              `;
+            };
+
+            candidatesList.innerHTML += cardTemp();
+
+            document
+              .querySelectorAll(`.candi-card [data-del-btn]`)
+              .forEach((delBtn) => {
+                delBtn.addEventListener("click", (e) => {
+                  const delBx = e.target
+                    .closest(".candi-card")
+                    .querySelector(`.del-sure-box`);
+
+                  delBx.classList.remove("hidden");
+
+                  delBx
+                    .querySelector("[data-del-id]")
+                    .addEventListener("click", (e) => {
+                      fetch(
+                        `http://localhost:8081/api/candidate/delete/${e.target.dataset.delId}`,
+                        {
+                          method: "DELETE",
+                        }
+                      )
+                        .then((res) => res.json)
+                        .then(() => {
+                          window.location.reload();
+                        });
+                    });
+
+                  delBx
+                    .querySelector("[data-del-cancel]")
+                    .addEventListener("click", (e) => {
+                      delBx.classList.add("hidden");
+                    });
+                });
+              });
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to fetch candidates: " + error.message);
+        });
+    </script>
+  </body>
+</html>
