@@ -50,8 +50,19 @@
       <div
         class="max-w-md mx-auto bg-white rounded p-6 shadow-md add-form-container"
       >
-        <h2 class="text-2xl font-bold mb-4">Candidate Submission Form</h2>
+        <h2 class="text-2xl font-bold mb-4 capitalize">Candidate add Form</h2>
         <form action="/submit-candidate" method="post">
+          <div class="mb-4">
+            <label for="partyName" class="block text-gray-700 font-bold mb-2"
+              >Party Name:</label
+            >
+            <input
+              type="text"
+              id="partyName"
+              name="partyName"
+              class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
+            />
+          </div>
           <div class="mb-4">
             <label
               for="candidateName"
@@ -63,7 +74,6 @@
               id="candidateName"
               name="candidateName"
               class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
-              required
             />
           </div>
           <div class="mb-4">
@@ -77,7 +87,6 @@
               id="candidateImgUrl"
               name="candidateImgUrl"
               class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
-              required
             />
           </div>
           <div class="mb-4">
@@ -91,7 +100,6 @@
               name="candidateContact"
               rows="4"
               class="w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:border-blue-500"
-              required
             ></textarea>
           </div>
 
@@ -106,7 +114,16 @@
     </div>
 
     <script>
+      let submitMode = "add";
+      let updateId = null;
+
       document.querySelector(`.show-form-btn`).addEventListener("click", () => {
+        submitMode = "add";
+
+        document.querySelector(
+          ".candidate-form-container h2"
+        ).innerHTML = `Candidate add Form`;
+
         document
           .querySelector(".candidate-form-container")
           .classList.remove("hidden");
@@ -135,28 +152,50 @@
 
           // Get form data
           const formData = {
+            partyName: event.target.partyName.value,
             candidateName: event.target.candidateName.value,
             candidateImgUrl: event.target.candidateImgUrl.value,
             candidateContact: event.target.candidateContact.value,
           };
 
-          // Send POST request
-          fetch("http://localhost:8081/api/candidate/add", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              alert("Candidate created successfully");
-
-              window.location.reload();
+          if (submitMode == "add") {
+            // Send POST request
+            fetch("http://localhost:8081/api/candidate/add", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
             })
-            .catch((error) => {
-              alert("Failed to create candidate: " + error.message);
-            });
+              .then((response) => response.json())
+              .then((data) => {
+                alert("Candidate created successfully");
+
+                window.location.reload();
+              })
+              .catch((error) => {
+                alert("Failed to create candidate: " + error.message);
+              });
+          } else {
+            // Send PUT request
+            fetch(`http://localhost:8081/api/candidate/update/${updateId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                alert("Candidate updated successfully");
+
+                window.location.reload();
+              })
+              .catch((error) => {
+                alert("Failed to create candidate: " + error.message);
+              });
+          }
         });
 
       // Fetch candidates data
@@ -174,15 +213,16 @@
                 <div class="bg-gray-200 h-32 mb-4 overflow-hidden">
                   <img class="w-full object-center" src="${candidate.candidateImgUrl}" alt="image"/>
                 </div>
-                <div class="text-lg font-bold mb-2">${candidate.candidateName}</div>
+                <h3 class="text-xl font-bold mb-2">${candidate.partyName}</h3>
+                <h2 class="text-base font-bold mb-2">${candidate.candidateName}</h2>
                 <div class="space-y-1 mb-4">
                   ${candidate.candidateContact}
                 </div>
                 <div class="flex justify-between">
-                  <button class="bg-black text-white py-1 px-4 rounded">
+                  <button data-edit-btn="${candidate._id}" class="bg-black text-white py-1 px-4 rounded">
                     Edit info
                   </button>
-                  <button onclick="console.log('${candidate._id}')" data-del-btn="${candidate._id}" class="bg-red-500 text-white py-1 px-4 rounded">
+                  <button data-del-btn="${candidate._id}" class="bg-red-500 text-white py-1 px-4 rounded">
                     delete
                   </button>
                 </div>
@@ -242,6 +282,21 @@
                     });
                 });
               });
+
+            document.querySelectorAll("[data-edit-btn]").forEach((elm) => {
+              elm.addEventListener("click", (ev) => {
+                submitMode = "update";
+                updateId = ev.target.dataset.editBtn;
+
+                document.querySelector(
+                  ".candidate-form-container h2"
+                ).innerHTML = `Candidate update Form`;
+
+                document
+                  .querySelector(".candidate-form-container")
+                  .classList.remove("hidden");
+              });
+            });
           });
         })
         .catch((error) => {

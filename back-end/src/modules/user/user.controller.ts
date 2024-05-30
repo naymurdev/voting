@@ -14,6 +14,8 @@ export const registerUser = catchAsync<User>(async (req, res) => {
 });
 
 export const loginUser = catchAsync<LoginPayload>(async (req, res) => {
+  console.log(req.body);
+
   const { user, token } = await userServices.login(req.body);
 
   // setCookie(res, token);

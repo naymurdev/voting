@@ -7,6 +7,29 @@
     <link href="./dist/styles/output.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- <script src="./js/loading-screen.js" defer></script> -->
+    <script defer>
+      const cookiesString = document.cookie;
+      // Parse cookies string into an object
+      const cookies = cookiesString
+        .split(";")
+        .reduce((cookiesObject, cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          cookiesObject[name] = value;
+          return cookiesObject;
+        }, {});
+      const token = cookies["Bearer"];
+      const voted = cookies["Voted"];
+      const userId = cookies["UserId"];
+      if (token) {
+        // Token cookie exists, user is logged in, allow browsing
+        console.log("Token cookie exists. Allowing browsing...");
+      } else {
+        // Token cookie doesn't exist, redirect to login page
+        console.log("Token cookie doesn't exist. Redirecting to login page...");
+        // Replace with the actual login page URL
+        window.location.href = "./login.html";
+      }
+    </script>
   </head>
   <body class="bg-[#f5f5dc]">
     <!-- <div id="loading-screen">
@@ -111,7 +134,12 @@
                   </div>
 
                   <div>
-                    <h3 class="text-xl font-semibold">${candidate.candidateName}</h3>
+                    <h3 class="text-xl font-semibold">${
+                      candidate.partyName
+                    }</h3>
+                    <h2 class="text-base font-semibold">${
+                      candidate.candidateName
+                    }</h3>
 
                     <p>
                       ${candidate.candidateContact}
@@ -119,18 +147,51 @@
                   </div>
                 </div>
 
-                <div>
+                ${
+                  voted == "false"
+                    ? `
+                  <div>
                   <a
+                    data-party-name="${candidate.partyName}"
+                    data-candidate-name="${candidate.candidateName}"
                     href="./vote.html"
-                    class="bg-green-500 text-white px-6 py-2 rounded shadow hover:bg-green-700"
+                    class="vote-btn bg-green-500 text-white px-6 py-2 rounded shadow hover:bg-green-700"
                     >vote</a
                   >
                 </div>
+                  `
+                    : ``
+                }
+                
               </div>
               `;
             };
 
             candidatesList.innerHTML += cardTemp();
+          });
+
+          document.querySelectorAll(".vote-btn").forEach((itm) => {
+            itm.addEventListener("click", (ev) => {
+              ev.preventDefault();
+
+              fetch(`http://localhost:8081/api/auth/update/${userId}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  partyName: ev.target.dataset.partyName,
+                  candidateName: ev.target.dataset.candidateName,
+                }),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  document.cookie = "Voted=" + true;
+                  console.log(data);
+                  window.location.reload();
+                })
+                .catch((err) => console.log(err));
+            });
           });
         })
         .catch((error) => {

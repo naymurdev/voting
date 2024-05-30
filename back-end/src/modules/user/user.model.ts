@@ -22,9 +22,9 @@ const userModelSchema = new Schema<User>(
         message: "You must be at least 18 years old to register.",
       },
     },
-    country: { type: String, enum: countries, required: true },
     password: { type: String, required: true },
     userId: { type: String, unique: true },
+    country: { type: String, default: "albania" },
     voted: {
       vote: {
         type: Boolean,
@@ -37,8 +37,7 @@ const userModelSchema = new Schema<User>(
   {
     timestamps: true,
     toJSON: {
-      transform: (doc, { password, createdAt, updatedAt, __v, ...rest }) =>
-        rest,
+      transform: (doc, { password, updatedAt, __v, ...rest }) => rest,
     },
   }
 );
@@ -46,7 +45,7 @@ const userModelSchema = new Schema<User>(
 userModelSchema.pre("save", async function (next) {
   this.password = await hash(this.password, 10);
 
-  this.userId = await generateUserId(this.country);
+  this.userId = await generateUserId("albania");
 
   next();
 });

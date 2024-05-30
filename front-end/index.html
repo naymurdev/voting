@@ -7,6 +7,27 @@
     <link href="./dist/styles/output.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- <script src="./js/loading-screen.js" defer></script> -->
+    <script defer>
+      const cookiesString = document.cookie;
+      // Parse cookies string into an object
+      const cookies = cookiesString
+        .split(";")
+        .reduce((cookiesObject, cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          cookiesObject[name] = value;
+          return cookiesObject;
+        }, {});
+      const token = cookies["Bearer"];
+      if (token) {
+        // Token cookie exists, user is logged in, allow browsing
+        console.log("Token cookie exists. Allowing browsing...");
+      } else {
+        // Token cookie doesn't exist, redirect to login page
+        console.log("Token cookie doesn't exist. Redirecting to login page...");
+        // Replace with the actual login page URL
+        window.location.href = "./login.html";
+      }
+    </script>
   </head>
   <body class="bg-[#f5f5dc]">
     <!-- <div id="loading-screen">

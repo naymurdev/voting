@@ -36,20 +36,72 @@
               <th class="py-2 px-4 border border-gray-400">id</th>
               <th class="py-2 px-4 border border-gray-400">user name</th>
               <th class="py-2 px-4 border border-gray-400">candidate</th>
+              <th class="py-2 px-4 border border-gray-400">party name</th>
               <th class="py-2 px-4 border border-gray-400">voting time</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td class="py-2 px-4 border border-gray-400">1</td>
-              <td class="py-2 px-4 border border-gray-400">Naymur Rahman</td>
-              <td class="py-2 px-4 border border-gray-400">Naymur Rahman</td>
-              <td class="py-2 px-4 border border-gray-400">28.5.204 5:10pm</td>
-            </tr>
+          <tbody class="voter-card-container">
             <!-- Add more rows as needed -->
           </tbody>
         </table>
       </div>
     </div>
+
+    <script>
+      function formatDateTime(isoString) {
+        const date = new Date(isoString);
+
+        const day = date.getUTCDate();
+        const month = date.getUTCMonth() + 1; // Months are zero-based
+        const year = date.getUTCFullYear();
+
+        let hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+
+        const period = hours >= 12 ? "pm" : "am";
+        hours = hours % 12 || 12; // Convert 0 hour to 12 for 12-hour clock
+
+        // Pad minutes with leading zero if needed
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+        // Construct the final formatted string
+        return `${day}.${month}.${year} ${hours}:${formattedMinutes}${period}`;
+      }
+
+      // Fetch candidates data
+      fetch("http://localhost:8081/api/auth/get")
+        .then((response) => response.json())
+        .then((obj) => {
+          const voterList = document.querySelector(".voter-card-container");
+
+          obj.users.forEach((voter) => {
+            console.log(voter);
+            const cardTemp = () => {
+              return `
+              <tr>
+                <td class="py-2 px-4 border border-gray-400">${
+                  voter.userId
+                }</td>
+                <td class="py-2 px-4 border border-gray-400">${voter.name}</td>
+                <td class="py-2 px-4 border border-gray-400">${
+                  voter.voted.candidateName
+                }</td>
+                <td class="py-2 px-4 border border-gray-400">${
+                  voter.voted.partyName
+                }</td>
+                <td class="py-2 px-4 border border-gray-400">${formatDateTime(
+                  voter.createdAt
+                )}</td>
+              </tr>
+              `;
+            };
+
+            voterList.innerHTML += cardTemp();
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to fetch candidates: " + error.message);
+        });
+    </script>
   </body>
 </html>

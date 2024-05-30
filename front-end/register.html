@@ -128,25 +128,16 @@
           const name = document.getElementById("name").value;
           const email = document.getElementById("email").value;
           const age = Number(document.getElementById("age").value);
-          const country = document.getElementById("country").value;
           const password = document.getElementById("password").value;
           const formData = {
             name,
             email,
             age,
-            country,
             password,
           };
           const confirmPassword =
             document.getElementById("confirmPassword").value;
-          if (
-            !name ||
-            !email ||
-            !country ||
-            !age ||
-            !password ||
-            !confirmPassword
-          ) {
+          if (!name || !email || !age || !password || !confirmPassword) {
             Swal.fire({
               icon: "error",
               title: "Oops...",
@@ -170,10 +161,7 @@
           submitButton.disabled = true;
           submitButton.innerHTML = "Loading...";
           axios
-            .post(
-              "https://voting-system-server.vercel.app/api/auth/register",
-              formData
-            )
+            .post("http://localhost:8081/api/auth/register", formData)
             .then(function (response) {
               // handle success
               console.log(response);
@@ -193,6 +181,9 @@
   `,
                 cancelButtonAriaLabel: "Thumbs down",
               });
+            })
+            .then(() => {
+              window.location.assign("./login.html");
             })
             .catch(function (error) {
               // handle error

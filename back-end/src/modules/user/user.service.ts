@@ -30,7 +30,6 @@ export async function login(payload: LoginPayload) {
   const token = jwt.sign(
     {
       userID: user.userId,
-      country: user.country,
       email: user.email,
       name: user.name,
     },

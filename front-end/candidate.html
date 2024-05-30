@@ -7,6 +7,27 @@
     <link href="./dist/styles/output.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- <script src="./js/loading-screen.js" defer></script> -->
+    <script defer>
+      const cookiesString = document.cookie;
+      // Parse cookies string into an object
+      const cookies = cookiesString
+        .split(";")
+        .reduce((cookiesObject, cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          cookiesObject[name] = value;
+          return cookiesObject;
+        }, {});
+      const token = cookies["Bearer"];
+      if (token) {
+        // Token cookie exists, user is logged in, allow browsing
+        console.log("Token cookie exists. Allowing browsing...");
+      } else {
+        // Token cookie doesn't exist, redirect to login page
+        console.log("Token cookie doesn't exist. Redirecting to login page...");
+        // Replace with the actual login page URL
+        window.location.href = "./login.html";
+      }
+    </script>
   </head>
   <body class="bg-[#f5f5dc]">
     <!-- <div id="loading-screen">
@@ -80,65 +101,52 @@
           <div></div>
         </div>
 
-        <div class="grid gap-8 grid-cols-3">
-          <div
-            class="grid gap-3 overflow-hidden rounded border border-red-500 border-8 p-4"
-          >
-            <div class="h-[260px] overflow-hidden">
-              <img
-                src="./assets/v2/card.jpeg"
-                alt="card-image"
-                class="w-full object-center object-cover"
-              />
-            </div>
-
-            <h3 class="text-xl font-semibold">bold text</h3>
-
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-              vero animi ea id possimus iste ipsum officia neque nihil quisquam.
-            </p>
-          </div>
-
-          <div
-            class="grid gap-3 overflow-hidden rounded border border-red-500 border-8 p-4"
-          >
-            <div class="h-[260px] overflow-hidden">
-              <img
-                src="./assets/v2/card.jpeg"
-                alt="card-image"
-                class="w-full object-center object-cover"
-              />
-            </div>
-
-            <h3 class="text-xl font-semibold">bold text</h3>
-
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-              vero animi ea id possimus iste ipsum officia neque nihil quisquam.
-            </p>
-          </div>
-
-          <div
-            class="grid gap-3 overflow-hidden rounded border border-red-500 border-8 p-4"
-          >
-            <div class="h-[260px] overflow-hidden">
-              <img
-                src="./assets/v2/card.jpeg"
-                alt="card-image"
-                class="w-full object-center object-cover"
-              />
-            </div>
-
-            <h3 class="text-xl font-semibold">bold text</h3>
-
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-              vero animi ea id possimus iste ipsum officia neque nihil quisquam.
-            </p>
-          </div>
+        <div class="grid gap-8 grid-cols-3 candi-card-container">
+          <!-- cards -->
         </div>
       </div>
     </main>
+
+    <script>
+      // Fetch candidates data
+      fetch("http://localhost:8081/api/candidate/get")
+        .then((response) => response.json())
+        .then((candidates) => {
+          const candidatesList = document.querySelector(
+            ".candi-card-container"
+          );
+
+          candidates.forEach((candidate) => {
+            `${candidate.candidateImgUrl}${candidate.partyName}
+${candidate.candidateName} ${candidate.candidateContact}`;
+            const cardTemp = () => {
+              return `
+              <div
+                class="grid gap-3 overflow-hidden rounded border border-red-500 border-8 p-4"
+              >
+                <div class="h-[260px] overflow-hidden">
+                  <img
+                    src="${candidate.candidateImgUrl}"
+                    alt="card-image"
+                    class="w-full object-center object-cover"
+                  />
+                </div>
+
+                <h3 class="text-xl font-semibold">${candidate.partyName}</h3>
+
+                <p>
+                  ${candidate.candidateContact}
+                </p>
+              </div>
+              `;
+            };
+
+            candidatesList.innerHTML += cardTemp();
+          });
+        })
+        .catch((error) => {
+          console.error("Failed to fetch candidates: " + error.message);
+        });
+    </script>
   </body>
 </html>

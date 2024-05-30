@@ -6,7 +6,7 @@ export const registerSchema = z.object({
   email: z.string().email(),
   age: z.number(),
   password: z.string(),
-  country: z.enum(countries),
+  country: z.enum(countries).optional(),
   voted: z
     .object({
       vote: z.boolean(),

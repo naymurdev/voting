@@ -11,7 +11,6 @@ export type LoginPayload = z.infer<typeof loginSchema>;
 
 export type TJwtPayload = {
   userID: string;
-  country: string;
   email: string;
   name: string;
 };

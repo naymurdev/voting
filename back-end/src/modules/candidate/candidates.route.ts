@@ -39,5 +39,34 @@ router.delete("/delete/:id", async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 });
+// update a candidate
+router.put("/update/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const updates = req.body;
+  // Filter out empty values
+  const nonEmptyUpdates = Object.keys(updates).reduce((acc, key) => {
+    if (updates[key] !== "") {
+      acc[key] = updates[key];
+    }
+    return acc;
+  }, {} as any);
+
+  try {
+    const candidate = await CandidateModel.findByIdAndUpdate(
+      id,
+      nonEmptyUpdates
+    );
+
+    if (!candidate) {
+      return res.status(404).json({ error: "Candidate not found" });
+    }
+    res.json({ message: "Candidate updated successfully", candidate });
+  } catch (error: any) {
+    console.log(error);
+
+    res.status(500).json({ error: error.message });
+  }
+});
 
 export const CandidateRoutes = router;
