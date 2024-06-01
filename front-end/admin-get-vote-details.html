@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Voting</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer>
+      const cookiesString = document.cookie;
+      // Parse cookies string into an object
+      const cookies = cookiesString
+        .split(";")
+        .reduce((cookiesObject, cookie) => {
+          const [name, value] = cookie.trim().split("=");
+          cookiesObject[name] = value;
+          return cookiesObject;
+        }, {});
+      const token = cookies["Bearer"];
+      if (token) {
+        // Token cookie exists, user is logged in, allow browsing
+        console.log("Token cookie exists. Allowing browsing...");
+      } else {
+        // Token cookie doesn't exist, redirect to login page
+        console.log("Token cookie doesn't exist. Redirecting to login page...");
+        // Replace with the actual login page URL
+        window.location.href = "./login.html";
+      }
+    </script>
   </head>
   <body class="bg-gray-100 h-[100vh]">
     <div class="flex h-full">
@@ -75,7 +96,6 @@
           const voterList = document.querySelector(".voter-card-container");
 
           obj.users.forEach((voter) => {
-            console.log(voter);
             const cardTemp = () => {
               return `
               <tr>
@@ -96,7 +116,9 @@
               `;
             };
 
-            voterList.innerHTML += cardTemp();
+            if (voter.type != "admin") {
+              voterList.innerHTML += cardTemp();
+            }
           });
         })
         .catch((error) => {

@@ -117,15 +117,12 @@
               if (response?.data?.data?.user?.voted.vote) {
                 document.cookie = "Voted=" + true;
               }
-              // if (response?.data?.data) {
-              //   Swal.fire({
-              //     icon: "success",
-              //     title: "Your Login successfully",
-              //     showConfirmButton: false,
-              //     timer: 1500,
-              //   });
-              // }
-              window.location.assign("./");
+
+              if (response?.data?.data?.user?.type == "admin") {
+                window.location.assign("./admin-add-candidate.html");
+              } else {
+                window.location.assign("./");
+              }
             })
             .catch(function (error) {
               // handle error
