@@ -1,6 +1,10 @@
 import { validateRequest } from "../../middlewares/validate-request";
 import { Router } from "express";
-import { loginUser, registerUser } from "./user.controller";
+import {
+  loginUser,
+  matchConfirmationCode,
+  registerUser,
+} from "./user.controller";
 import { loginSchema, registerSchema } from "./user.validation";
 import { UserModel } from "./user.model";
 
@@ -8,7 +12,7 @@ const router = Router();
 
 router.get("/get", async (req: any, res: any) => {
   try {
-    const users = await UserModel.find();
+    const users = await UserModel.find({ "voted.vote": true });
 
     res.json({ message: "User updated successfully", users });
   } catch (error: any) {
@@ -17,6 +21,7 @@ router.get("/get", async (req: any, res: any) => {
 });
 router.post("/register", validateRequest(registerSchema), registerUser);
 router.post("/login", validateRequest(loginSchema), loginUser);
+router.post("/match/confirmation-code", matchConfirmationCode);
 router.put("/update/:id", async (req: any, res: any) => {
   const { id } = req.params;
   console.log(id);

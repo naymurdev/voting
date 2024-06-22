@@ -14,6 +14,7 @@ export const registerSchema = z.object({
       candidateName: z.string(),
     })
     .optional(),
+  confirmationCode: z.string().optional(),
 });
 
 export const loginSchema = z.object({

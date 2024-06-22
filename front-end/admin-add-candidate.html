@@ -26,6 +26,7 @@
         window.location.href = "./login.html";
       }
     </script>
+    <script src="./js/logout.js" defer></script>
   </head>
   <body class="bg-gray-100 h-[100vh]">
     <div class="flex h-full">
@@ -51,10 +52,19 @@
       </div>
       <!-- Main Content -->
       <div class="flex-1 p-6">
-        <div
-          class="show-form-btn flex justify-center items-center w-24 h-24 border-2 border-dashed border-black mb-6 cursor-pointer"
-        >
-          <span class="text-3xl">+</span>
+        <div class="flex justify-between items-center">
+          <div
+            class="show-form-btn flex justify-center items-center w-24 h-24 border-2 border-dashed border-black mb-6 cursor-pointer"
+          >
+            <span class="text-3xl">+</span>
+          </div>
+
+          <button
+            href="./"
+            class="logout-btn bg-gray-500 text-white px-6 py-2 rounded shadow hover:bg-gray-700"
+          >
+            logout
+          </button>
         </div>
 
         <div
@@ -66,10 +76,10 @@
     </div>
 
     <div
-      class="hidden backdrop-blur-sm fixed top-0 left-0 w-full h-[100vh] grid place-content-center candidate-form-container"
+      class="hidden backdrop-blur-lg fixed top-0 left-0 w-full h-[100vh] grid place-content-center candidate-form-container"
     >
       <div
-        class="max-w-md mx-auto bg-white rounded p-6 shadow-md add-form-container"
+        class="mx-auto bg-white rounded p-6 shadow-xl add-form-container w-[400px]"
       >
         <h2 class="text-2xl font-bold mb-4 capitalize">Candidate add Form</h2>
         <form action="/submit-candidate" method="post">
@@ -249,9 +259,9 @@
                 </div>
 
                 <div
-                  class="del-sure-box hidden fixed top-0 left-0 grid place-content-center backdrop-blur-sm w-full h-[100vh]"
+                  class="del-sure-box hidden fixed top-0 left-0 grid place-content-center backdrop-blur-lg w-full h-[100vh]"
                 >
-                  <div class="del-confirm max-w-md mx-auto bg-white rounded p-6 shadow-md">
+                  <div class="del-confirm max-w-md mx-auto bg-white rounded p-6 shadow-xl">
                     <h2 class="text-2xl font-bold mb-4 capitalize">are you sure?</h2>
 
                     <div class="flex gap-4">

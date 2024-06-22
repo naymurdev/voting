@@ -25,3 +25,14 @@ export const loginUser = catchAsync<LoginPayload>(async (req, res) => {
     data: { user, token },
   });
 });
+
+export const matchConfirmationCode = async (req: any, res: any) => {
+  const matched = await userServices.matchCode(req.body);
+
+  // setCookie(res, token);
+
+  sendResponse(res, {
+    message: "matching successful",
+    data: matched,
+  });
+};

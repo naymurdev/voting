@@ -33,6 +33,10 @@ const userModelSchema = new Schema<User>(
       partyName: String,
       candidateName: String,
     },
+    confirmationCode: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,
